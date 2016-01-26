@@ -64,6 +64,7 @@ gar_shiny_getAuthUrl <-
            client.id     = getOption("googleAuthR.webapp.client_id"),
            client.secret = getOption("googleAuthR.webapp.client_secret"),
            scope         = getOption("googleAuthR.scopes.selected"),
+           hd            = getOption("googleAuthR.hd"),
            access_type   = c("online","offline")) {
     
     access_type <- match.arg(access_type)
@@ -79,6 +80,7 @@ gar_shiny_getAuthUrl <-
                    scope = scopeEnc,
                    state = state,
                    access_type = access_type,
+                   hd = hd,
                    approval_prompt = "auto"))
     message("Auth Token URL: ", url)
     url
@@ -110,9 +112,7 @@ gar_shiny_getUrl <- function(session){
     url <- paste0(session$clientData$url_protocol,
                   "//",
                   hostname,
-                  ifelse(hostname %in% c("127.0.0.1","localhost"),
-                         ":",
-                         pathname),
+                  ":",
                   session$clientData$url_port)
 #     message("Shiny URL detected as: ", url)
     url
